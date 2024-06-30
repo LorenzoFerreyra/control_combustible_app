@@ -45,3 +45,64 @@ def generate_unique_id_empleado():
 def set_unique_id_empleado(sender, instance, **kwargs):
     if not instance.id_empleado:
         instance.id_empleado = generate_unique_id_empleado()
+        
+class Equipo(models.Model):
+    # Campo ID_ITEM con el mismo funcionamiento que id_empleado
+    id_item = models.CharField(max_length=10, unique=True, editable=False)
+
+    # Otros campos...
+    numero_interno = models.IntegerField(verbose_name="N° INT.")
+    tipo_equipo = models.CharField(max_length=255, verbose_name="TIPO EQUIPO")
+    sam = models.CharField(max_length=255, verbose_name="SAM")
+    nuevo_codigo = models.CharField(max_length=255, verbose_name="NUEVO COD.")
+    año = models.IntegerField(verbose_name="AÑO")
+    marca = models.CharField(max_length=255, verbose_name="MARCA")
+    modelo_maquina = models.CharField(max_length=255, verbose_name="MOD. MAQ.")
+    consumo_promedio = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="CONSUM. PROM")
+    fecha_actualizacion = models.DateField(verbose_name="FECHA DE ACTUALIZACION")
+    ubicacion = models.CharField(max_length=255, verbose_name="UBICACIÓN")
+
+    def __str__(self):
+        return f"{self.tipo_equipo} - {self.marca} {self.modelo_maquina}"
+
+    class Meta:
+        verbose_name = "Equipo"
+        verbose_name_plural = "Equipos"
+
+def generate_unique_id_item():
+    return uuid.uuid4().hex[:10].upper()
+# Conectamos la señal pre_save al modelo Equipo
+@receiver(pre_save, sender=Equipo)
+def set_unique_id_item(sender, instance, **kwargs):
+    if not instance.id_item:
+        instance.id_item = generate_unique_id_item()
+
+class Ruta(models.Model):
+    # Campos del modelo Ruta
+    ruta = models.CharField(max_length=255, verbose_name="RUTA")
+    distrito = models.IntegerField(verbose_name="DISTRITO")
+    ZONA_CHOICES = [
+        ('Chaco', 'Chaco'),
+        ('Centro', 'Centro'),
+        ('Cintis', 'Cintis'),
+        ('Norte', 'Norte'),
+    ]
+    zona = models.CharField(max_length=10, choices=ZONA_CHOICES, verbose_name="ZONA")
+    seccion = models.CharField(max_length=255, verbose_name="SECCION")
+    longitud_km = models.IntegerField(verbose_name="LONG. Km")
+    km_inicial = models.IntegerField(verbose_name="KM INICIAL")
+    km_final = models.IntegerField(verbose_name="KM FINAL")
+    tramo = models.CharField(max_length=255, verbose_name="TRAMO")
+    lugar_inicial = models.CharField(max_length=255, verbose_name="LUGAR INICIAL")
+    lugar_final = models.CharField(max_length=255, verbose_name="LUGAR FINAL")
+    pavimento = models.BooleanField(default=False, verbose_name="PAV.")
+    empedrado = models.BooleanField(default=False, verbose_name="EMPEDRADO")
+    ripio = models.BooleanField(default=False, verbose_name="RIPIO")
+    tierra = models.BooleanField(default=False, verbose_name="TIERRA")
+
+    def __str__(self):
+        return self.ruta
+
+    class Meta:
+        verbose_name = "Ruta"
+        verbose_name_plural = "Rutas"
