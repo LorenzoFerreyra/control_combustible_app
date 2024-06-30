@@ -4,9 +4,10 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from datetime import date
 
+
 class Empleado(models.Model):
     # Campos del modelo Empleado
-    id_empleado = models.CharField(max_length=10, unique=True, editable=False, null=True, primary_key=True)
+    id_empleado = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     res = models.CharField(max_length=255, verbose_name="RES")
     ub_actual = models.CharField(max_length=255, verbose_name="UB-ACTUAL")
     paterno = models.CharField(max_length=255, verbose_name="PATERNO")
@@ -37,23 +38,14 @@ class Empleado(models.Model):
         verbose_name = "Empleado"
         verbose_name_plural = "Empleados"
 
-# Función para generar el id_empleado único
-def generate_unique_id_empleado():
-    return uuid.uuid4().hex[:10].upper()
-
-# Conectar la señal pre_save al modelo Empleado
-@receiver(pre_save, sender=Empleado)
-def set_unique_id_empleado(sender, instance, **kwargs):
-    if not instance.id_empleado:
-        instance.id_empleado = generate_unique_id_empleado()
         
 class Equipo(models.Model):
     # Campo ID_ITEM con el mismo funcionamiento que id_empleado
-    id_item = models.CharField(max_length=10, unique=True, editable=False, primary_key=True)
+    id_item = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
 
     # Otros campos...
     numero_interno = models.IntegerField(verbose_name="N° INT.")
-    tipo_equipo = models.CharField(max_length=255, verbose_name="TIPO EQUIPO")
+    tipo_equipo = models.CharField(max_length=255, verbose_name="TIPO EQUIPO", unique=True)
     sam = models.CharField(max_length=255, verbose_name="SAM")
     nuevo_codigo = models.CharField(max_length=255, verbose_name="NUEVO COD.")
     año = models.IntegerField(verbose_name="AÑO")
@@ -70,13 +62,6 @@ class Equipo(models.Model):
         verbose_name = "Equipo"
         verbose_name_plural = "Equipos"
 
-def generate_unique_id_item():
-    return uuid.uuid4().hex[:10].upper()
-# Conectamos la señal pre_save al modelo Equipo
-@receiver(pre_save, sender=Equipo)
-def set_unique_id_item(sender, instance, **kwargs):
-    if not instance.id_item:
-        instance.id_item = generate_unique_id_item()
 
 class Ruta(models.Model):
     # Campos del modelo Ruta
@@ -270,7 +255,7 @@ class EnTransito(models.Model):
     tipo_equipo = models.ForeignKey(Equipo, to_field='tipo_equipo', on_delete=models.CASCADE, verbose_name="Tipo de Equipo")
 
     # Relacionando con el modelo Empleado para obtener el operador
-    operador = models.ForeignKey(Empleado, to_field='paterno', on_delete=models.CASCADE, verbose_name="Operador")
+    operador = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name="Operador")
 
     gasolina_cargada = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Gasolina Cargada")
     diesel_cargado = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Diesel Cargado")
