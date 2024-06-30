@@ -1,7 +1,11 @@
+import uuid
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 class Empleado(models.Model):
     # Campos del modelo Empleado
+    id_empleado = models.CharField(max_length=10, unique=True, editable=False, null=True)
     res = models.CharField(max_length=255, verbose_name="RES")
     ub_actual = models.CharField(max_length=255, verbose_name="UB-ACTUAL")
     paterno = models.CharField(max_length=255, verbose_name="PATERNO")
@@ -31,3 +35,13 @@ class Empleado(models.Model):
     class Meta:
         verbose_name = "Empleado"
         verbose_name_plural = "Empleados"
+
+# Función para generar el id_empleado único
+def generate_unique_id_empleado():
+    return uuid.uuid4().hex[:10].upper()
+
+# Conectar la señal pre_save al modelo Empleado
+@receiver(pre_save, sender=Empleado)
+def set_unique_id_empleado(sender, instance, **kwargs):
+    if not instance.id_empleado:
+        instance.id_empleado = generate_unique_id_empleado()
