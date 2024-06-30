@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from datetime import date
 
 class Empleado(models.Model):
     # Campos del modelo Empleado
@@ -79,7 +80,7 @@ def set_unique_id_item(sender, instance, **kwargs):
 
 class Ruta(models.Model):
     # Campos del modelo Ruta
-    ruta = models.CharField(max_length=255, verbose_name="RUTA")
+    ruta = models.CharField(max_length=255, verbose_name="RUTA", primary_key=True)
     distrito = models.IntegerField(verbose_name="DISTRITO")
     ZONA_CHOICES = [
         ('Chaco', 'Chaco'),
@@ -133,3 +134,89 @@ class Actividad(models.Model):
     class Meta:
         verbose_name = "Actividad"
         verbose_name_plural = "Actividades"
+
+class Proyecto_DE5(models.Model):
+    id_proyecto = models.AutoField(primary_key=True, verbose_name="ID de proyecto")
+    nro_interno = models.CharField(max_length=255, verbose_name="N.° interno de proyecto")
+    nombre = models.CharField(max_length=255, verbose_name="Nombre de Proyecto")
+    provincia = models.CharField(max_length=255, verbose_name="Provincia")
+    director = models.ForeignKey('Empleado', on_delete=models.CASCADE, verbose_name="Director o Encargado")
+    fecha_inicio = models.DateField(verbose_name="Fecha de inicio")
+    fecha_fin = models.DateField(null=True, blank=True, verbose_name="Fecha de fin")
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name = "Proyecto"
+        verbose_name_plural = "Proyectos"
+
+class ControlMensualEquipo(models.Model):
+    proyecto = models.ForeignKey('Proyecto_DE5', on_delete=models.CASCADE, verbose_name="Proyecto")
+    DIA_SEMANA_CHOICES = [
+        (1, 'Lunes'),
+        (2, 'Martes'),
+        (3, 'Miércoles'),
+        (4, 'Jueves'),
+        (5, 'Viernes'),
+        (6, 'Sábado'),
+        (7, 'Domingo'),
+    ]
+    dia = models.IntegerField(choices=DIA_SEMANA_CHOICES, editable=False, verbose_name="DIA")
+    fecha = models.DateField(verbose_name="FECHA", default=date.today)
+    codigo_operacion = models.CharField(max_length=255, verbose_name="COD. OPE.")
+    tramo = models.ForeignKey('Ruta', on_delete=models.CASCADE, verbose_name="TRAMO")
+    alm_5 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="ALM-5")
+    gasolina = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="GASOLINA")
+    diesel = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="DIESEL")
+    horometro_inicial = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HOROMETRO INICIAL")
+    horometro_final = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HOROMETRO FINAL")
+    horas_operadas = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HORAS OPERADAS", editable=False)
+    actividad = models.ForeignKey('Actividad', on_delete=models.CASCADE, verbose_name="ACTIVIDAD")
+    cantidad = models.IntegerField(verbose_name="CANTIDAD")
+    pasadas = models.IntegerField(verbose_name="PASADAS")
+    lubricante_15w40_gasolina = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="15W-40 Gasolina")
+    lubricante_15w40_diesel = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="15W-40 Diesel")
+    lubricante_aoh68_hidraulico = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="AOH-68 Hidraulico")
+    lubricante_85w140 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="85W-140")
+    lubricante_80w90 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="80W-90")
+    lubricante_mt1_10w_transm = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="MT1-10W TRANSM")
+    lubricante_tipo_a = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="TIPO A")
+    anticongelante = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="ANTICONGELANTE")
+    liquido_frenos = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="LIQUID. FRENOS")
+    grasa_rodam_kg = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="RODAM")
+    grasa_chasis_kg = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="CHASIS")
+    hrs_disponibilidad = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HRS DISP.")
+    hrs_combustible = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HRS COMB.")
+    hrs_lubricantes = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HRS LUB.")
+    hrs_repuestos = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HRS REPU.")
+    hrs_operador = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HRS OPE.")
+    hrs_tiempo = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HRS TIEM.")
+    hrs_reparacion = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HRS REPA.")
+    hrs_mantenimiento = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HRS MTO.")
+    hrs_otros = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="HRS OTROS")
+
+    def __str__(self):
+        return f"{self.fecha} - {self.codigo_operador}"
+
+    class Meta:
+        verbose_name = "Control Mensual de Equipo"
+        verbose_name_plural = "Controles Mensuales de Equipos"
+    
+    @property
+    def hrs_total_perdidas(self):
+        total_perdidas = (
+            self.hrs_combustible +
+            self.hrs_lubricantes +
+            self.hrs_repuestos +
+            self.hrs_operador +
+            self.hrs_tiempo +
+            self.hrs_reparacion +
+            self.hrs_mantenimiento +
+            self.hrs_otros
+        )
+        return total_perdidas
+    def save(self, *args, **kwargs):
+        self.dia = self.fecha.isoweekday()  # Lunes es 1 y Domingo es 7
+        self.horas_operadas = self.horometro_final - self.horometro_inicial
+        super().save(*args, **kwargs)
