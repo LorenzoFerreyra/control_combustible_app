@@ -6,7 +6,7 @@ from datetime import date
 
 class Empleado(models.Model):
     # Campos del modelo Empleado
-    id_empleado = models.CharField(max_length=10, unique=True, editable=False, null=True)
+    id_empleado = models.CharField(max_length=10, unique=True, editable=False, null=True, primary_key=True)
     res = models.CharField(max_length=255, verbose_name="RES")
     ub_actual = models.CharField(max_length=255, verbose_name="UB-ACTUAL")
     paterno = models.CharField(max_length=255, verbose_name="PATERNO")
@@ -49,7 +49,7 @@ def set_unique_id_empleado(sender, instance, **kwargs):
         
 class Equipo(models.Model):
     # Campo ID_ITEM con el mismo funcionamiento que id_empleado
-    id_item = models.CharField(max_length=10, unique=True, editable=False)
+    id_item = models.CharField(max_length=10, unique=True, editable=False, primary_key=True)
 
     # Otros campos...
     numero_interno = models.IntegerField(verbose_name="N° INT.")
@@ -148,8 +148,8 @@ class Proyecto_DE5(models.Model):
         return self.nombre
 
     class Meta:
-        verbose_name = "Proyecto"
-        verbose_name_plural = "Proyectos"
+        verbose_name = "Proyecto DE5"
+        verbose_name_plural = "Proyectos DE5"
 
 class ControlMensualEquipo(models.Model):
     proyecto = models.ForeignKey('Proyecto_DE5', on_delete=models.CASCADE, verbose_name="Proyecto")
@@ -220,3 +220,76 @@ class ControlMensualEquipo(models.Model):
         self.dia = self.fecha.isoweekday()  # Lunes es 1 y Domingo es 7
         self.horas_operadas = self.horometro_final - self.horometro_inicial
         super().save(*args, **kwargs)
+
+class TransaccionCombustible(models.Model):
+    TIPO_CHOICES = (
+        ('Ingreso', 'Ingreso'),
+        ('Egreso', 'Egreso'),
+    )
+
+    SUBTIPO_CHOICES = (
+        ('Ingresos propios', 'Ingresos propios'),
+        ('Otros ingresos', 'Otros ingresos'),
+        ('Egresos por transferencia', 'Egresos por transferencia'),
+        ('Ingresos por demasía o remanencia', 'Ingresos por demasía o remanencia'),
+    )
+
+    project_link = models.ForeignKey('Proyecto_DE5', on_delete=models.CASCADE, verbose_name="Proyecto")
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES, verbose_name="TIPO")
+    subtipo = models.CharField(max_length=50, choices=SUBTIPO_CHOICES, verbose_name="SUBTIPO")
+    fecha = models.DateField(verbose_name="FECHA")
+    descripcion = models.CharField(max_length=255, verbose_name="DESCRIPCION")
+    gasolina_lt = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="GASOLINA [LT]", null=True, blank=True)
+    diesel_lt = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="DIESEL [LT]", null=True, blank=True)
+    lubricante_15w40_gasolina = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="15W-40 Gasolina", null=True, blank=True)
+    lubricante_15w40_diesel = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="15W-40 Diesel", null=True, blank=True)
+    lubricante_aoh68_hidraulico = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="AOH-68 Hidraulico", null=True, blank=True)
+    lubricante_85w140 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="85W-140", null=True, blank=True)
+    lubricante_80w90 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="80W-90", null=True, blank=True)
+    lubricante_mt1_10w_transm = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="MT1-10W TRANSM", null=True, blank=True)
+    lubricante_tipo_a = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="TIPO A", null=True, blank=True)
+    anticongelante = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="ANTICONGELANTE", null=True, blank=True)
+    liquido_frenos = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="LIQUID. FRENOS", null=True, blank=True)
+    grasa_rodam = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="RODAM", null=True, blank=True)
+    grasa_chasis = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="GRASA CHASIS", null=True, blank=True)
+    observaciones = models.CharField(max_length=255, verbose_name="OBSERVACIONES", null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.fecha} - {self.descripcion}"
+
+    class Meta:
+        verbose_name = "Transacción de Combustible"
+        verbose_name_plural = "Transacciones de Combustible"
+
+class EnTransito(models.Model):
+    proyecto = models.ForeignKey('Proyecto_DE5', on_delete=models.CASCADE, verbose_name="Proyecto")
+    numero = models.AutoField(primary_key=True, verbose_name="Número")
+    numero_interno = models.IntegerField(verbose_name="Número Interno")
+
+    # Relacionando con el modelo Equipo para obtener el tipo de equipo
+    tipo_equipo = models.ForeignKey(Equipo, to_field='tipo_equipo', on_delete=models.CASCADE, verbose_name="Tipo de Equipo")
+
+    # Relacionando con el modelo Empleado para obtener el operador
+    operador = models.ForeignKey(Empleado, to_field='paterno', on_delete=models.CASCADE, verbose_name="Operador")
+
+    gasolina_cargada = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Gasolina Cargada")
+    diesel_cargado = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Diesel Cargado")
+    lubricante_15w40_gasolina = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="15W-40 Gasolina")
+    lubricante_15w40_diesel = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="15W-40 Diesel")
+    lubricante_aoh68_hidraulico = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="AOH-68 Hidráulico")
+    lubricante_85w140 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="85W-140")
+    lubricante_80w90 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="80W-90")
+    lubricante_mt1_10w_transm = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="MT1-10W TRANSM")
+    fluido_tipo_a = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Fluido Tipo A")
+    anticongelante_litros = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Anticongelante Litros")
+    liquido_freno = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Líquido de Freno")
+    grasa_rodamiento = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Grasa de Rodamiento")
+    grasa_chasis = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Grasa de Chasis")
+    observaciones = models.TextField(verbose_name="Observaciones")
+
+    def __str__(self):
+        return f"En Transito {self.numero} - Proyecto: {self.proyecto}"
+
+    class Meta:
+        verbose_name = "En Tránsito"
+        verbose_name_plural = "Datos en Tránsito"
