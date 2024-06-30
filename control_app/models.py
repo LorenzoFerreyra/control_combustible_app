@@ -106,3 +106,30 @@ class Ruta(models.Model):
     class Meta:
         verbose_name = "Ruta"
         verbose_name_plural = "Rutas"
+        
+class Actividad(models.Model):
+    # Campo N° (id autoincremental de Django)
+    id = models.AutoField(primary_key=True, verbose_name="N°")
+    
+    # Otros campos
+    codigo = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="CODIGO")
+    grupo = models.IntegerField(verbose_name="GRUPO")
+    actividad = models.CharField(max_length=255, verbose_name="ACTIVIDAD")
+    subactividad = models.CharField(max_length=255, verbose_name="SUBACTIVIDAD")
+    unidad = models.CharField(max_length=255, verbose_name="UNIDAD")
+    produccion_diaria_min = models.FloatField(verbose_name="PRODUCC DIARIA [MIN]")
+    produccion_diaria_max = models.FloatField(verbose_name="PRODUCC DIARIA [MAX]")
+    produccion_diaria_prom = models.FloatField(verbose_name="PRODUCC DIARIA [PROM]")
+    produccion_unid_hr_prom = models.FloatField(verbose_name="PRODUCC UNID/HR [PROM]")
+    produccion_hr_unid_prom = models.FloatField(verbose_name="PRODUCC HR/UNID [PROM]")
+    camioneta = models.BooleanField(default=False, verbose_name="CAMIONETA")
+    motoniveladora = models.BooleanField(default=False, verbose_name="MOTONIVELADORA")
+    camion_aguatero = models.BooleanField(default=False, verbose_name="CAMION AGUATERO")
+    bomba_de_agua = models.BooleanField(default=False, verbose_name="BOMBA DE AGUA")
+
+    def __str__(self):
+        return self.actividad
+
+    class Meta:
+        verbose_name = "Actividad"
+        verbose_name_plural = "Actividades"
