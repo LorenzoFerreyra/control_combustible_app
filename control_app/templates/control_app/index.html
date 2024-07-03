@@ -15,6 +15,7 @@
         <h1>Sistema de Gestión</h1>
         <nav>
             <ul>
+                {% comment %}
                 <li><a href="{% url 'empleados' %}">Empleados</a></li>
                 <li><a href="{% url 'equipos' %}">Equipos</a></li>
                 <li><a href="{% url 'rutas' %}">Rutas</a></li>
@@ -23,6 +24,7 @@
                 <li><a href="{% url 'controles_mensuales_equipos' %}">Controles Mensuales</a></li>
                 <li><a href="{% url 'transacciones_combustible' %}">Transacciones Combustible</a></li>
                 <li><a href="{% url 'en_transito' %}">En Tránsito</a></li>
+                {% endcomment %}
             </ul>
         </nav>
     </header>
