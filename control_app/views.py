@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 #from django.contrib.auth.models import User, Empleado
 from django.contrib.auth.decorators import login_required
 from .models import Empleado, Equipo, Ruta, Actividad
+from .forms import EmpleadoForm
 
 #@login_required
 def index(request):
@@ -46,3 +47,31 @@ def ruta_list(request):
 def actividad_list(request):
     actividades = Actividad.objects.all()
     return render(request, 'actividad_list.html', {'actividades': actividades})
+
+def crear_empleado(request):
+    if request.method == 'POST':
+        form = EmpleadoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_empleados')
+    else:
+        form = EmpleadoForm()
+    return render(request, 'crear_empleado.html', {'form': form})
+
+def editar_empleado(request, id_empleado):
+    empleado = get_object_or_404(Empleado, id_empleado=id_empleado)
+    if request.method == 'POST':
+        form = EmpleadoForm(request.POST, instance=empleado)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_empleados')
+    else:
+        form = EmpleadoForm(instance=empleado)
+    return render(request, 'editar_empleado.html', {'form': form, 'empleado': empleado})
+
+def eliminar_empleado(request, id_empleado):
+    empleado = get_object_or_404(Empleado, id_empleado=id_empleado)
+    if request.method == 'POST':
+        empleado.delete()
+        return redirect('lista_empleados')
+    return render(request, 'eliminar_empleado.html', {'empleado': empleado})
