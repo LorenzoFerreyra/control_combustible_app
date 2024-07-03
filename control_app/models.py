@@ -1,12 +1,12 @@
 import uuid
 from django.db import models
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 from datetime import date
+from django.contrib.auth.models import User
 
 
 class Empleado(models.Model):
     # Campos del modelo Empleado
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     id_empleado = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     res = models.CharField(max_length=255, verbose_name="RES")
     ub_actual = models.CharField(max_length=255, verbose_name="UB-ACTUAL")
