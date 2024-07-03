@@ -13,6 +13,7 @@
 <body>
     <header>
         <h1>Sistema de Gestión</h1>
+        {% include 'navbar.html' %}
         <nav>
             <ul>
                 {% comment %}
@@ -28,7 +29,6 @@
             </ul>
         </nav>
     </header>
-
     <main>
         <h2>Listado de {{ section_title }}</h2>
         <div class="search-container">
