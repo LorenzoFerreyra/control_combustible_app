@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% block content %}
+<h1>Lista de Empleados</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Empleado</th>
+            <th>RES</th>
+            <th>Ubicación Actual</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Nombre 1</th>
+            <th>Nombre 2</th>
+            <th>Cargo</th>
+            <th>Nivel</th>
+            <th>Ingreso</th>
+            <th>Salida</th>
+            <th>Admin</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for empleado in empleados %}
+        <tr>
+            <td>{{ empleado.id_empleado }}</td>
+            <td>{{ empleado.res }}</td>
+            <td>{{ empleado.ub_actual }}</td>
+            <td>{{ empleado.paterno }}</td>
+            <td>{{ empleado.materno }}</td>
+            <td>{{ empleado.nom1 }}</td>
+            <td>{{ empleado.nom2 }}</td>
+            <td>{{ empleado.cargo }}</td>
+            <td>{{ empleado.nivel }}</td>
+            <td>{{ empleado.ingreso }}</td>
+            <td>{{ empleado.salida }}</td>
+            <td>{{ empleado.admin }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
