@@ -13,6 +13,8 @@
 <body>
     <header>
         <h1>Sistema de Gestión</h1>
+        {% if user.is_authenticated %}
+            {% include 'navbar.html' %}
         {% include 'navbar.html' %}
         <nav>
             <ul>
@@ -28,8 +30,10 @@
                 {% endcomment %}
             </ul>
         </nav>
+        {% endif %}
     </header>
     <main>
+        {% block content %}
         <h2>Listado de {{ section_title }}</h2>
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Buscar...">
@@ -53,6 +57,7 @@
             </tbody>
         </table>
         <div class="pagination" id="pagination"></div>
+        {% endblock %}
     </main>
 
     <footer class="footer">

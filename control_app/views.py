@@ -24,6 +24,7 @@ def login_user(request):
 	else:
 		return render(request, 'login.html', {})
 
+#@login_required
 def logout_user(request):
 	logout(request)
 	messages.success(request, ("Cerró sesión. Gracias por visitarnos."))
