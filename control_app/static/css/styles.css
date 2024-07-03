@@ -121,17 +121,19 @@ th {
     background-color: #ddd;
     border-radius: 5px;
 }
-.btn-custom {
-    background-color: #4CAF50;
-    border-color: #4CAF50;
-    color: rgb(5, 5, 5);
+
+
+.btn.btn-custom {
+    background-color: #4CAF50 !important;
+    border-color: #4CAF50 !important;
+    color: white !important;
 }
 
-.btn-custom:hover {
-    background-color: #080101;
-    border-color: #0a0808;
+.btn.btn-custom:hover {
+    background-color: #45a049 !important;
+    border-color: #45a049 !important;
 }
 
-.bg-custom {
-    background-color: #4CAF50; 
+.card-header.bg-custom {
+    background-color: #4CAF50 !important;
 }
