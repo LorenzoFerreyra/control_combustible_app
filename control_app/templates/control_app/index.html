@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Sistema de Gestión</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'empleados' %}">Empleados</a></li>
+                <li><a href="{% url 'equipos' %}">Equipos</a></li>
+                <li><a href="{% url 'rutas' %}">Rutas</a></li>
+                <li><a href="{% url 'actividades' %}">Actividades</a></li>
+                <li><a href="{% url 'proyectos_de5' %}">Proyectos DE5</a></li>
+                <li><a href="{% url 'controles_mensuales_equipos' %}">Controles Mensuales</a></li>
+                <li><a href="{% url 'transacciones_combustible' %}">Transacciones Combustible</a></li>
+                <li><a href="{% url 'en_transito' %}">En Tránsito</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Listado de {{ section_title }}</h2>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar...">
+        </div>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    {% for header in headers %}
+                    <th>{{ header }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in objects %}
+                <tr>
+                    {% for field in obj %}
+                    <td>{{ field }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination" id="pagination"></div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024, Sistema de control de combustible. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            $("#dataTable").tablesorter();
+
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#dataTable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            var rowsShown = 10;
+            var rowsTotal = $('#dataTable tbody tr').length;
+            var numPages = Math.ceil(rowsTotal / rowsShown);
+
+            for (i = 0; i < numPages; i++) {
+                var pageNum = i + 1;
+                $('#pagination').append('<a href="#" rel="' + i + '">' + pageNum + '</a> ');
+            }
+
+            $('#dataTable tbody tr').hide();
+            $('#dataTable tbody tr').slice(0, rowsShown).show();
+            $('#pagination a:first').addClass('active');
+
+            $('#pagination a').bind('click', function(e) {
+                e.preventDefault();
+                $('#pagination a').removeClass('active');
+                $(this).addClass('active');
+                var currPage = $(this).attr('rel');
+                var startItem = currPage * rowsShown;
+                var endItem = startItem + rowsShown;
+                $('#dataTable tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
+                    css('display', 'table-row').animate({ opacity: 1 }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
