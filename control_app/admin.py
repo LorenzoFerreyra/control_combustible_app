@@ -1,8 +1,11 @@
 from django.contrib import admin
-from .models import ControlMensualEquipo
+from .models import Empleado, Equipo, Ruta, Actividad, Proyecto_DE5, ControlMensualEquipo, TransaccionCombustible, EnTransito
 
-class ControlMensualEquipoAdmin(admin.ModelAdmin):
-    readonly_fields = ('horas_operadas', 'dia')  # Campos que no se pueden editar
-    list_display = ('fecha', 'codigo_operacion', 'horas_operadas', 'dia')  # Campos que se muestran en la lista
-
-admin.site.register(ControlMensualEquipo, ControlMensualEquipoAdmin)
+admin.site.register(ControlMensualEquipo)
+admin.site.register(Empleado)
+admin.site.register(Equipo)
+admin.site.register(Ruta)
+admin.site.register(Actividad)
+admin.site.register(Proyecto_DE5)
+admin.site.register(TransaccionCombustible)
+admin.site.register(EnTransito)
