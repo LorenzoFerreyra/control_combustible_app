@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-#from django.contrib.auth.models import User, Empleado
 from django.contrib.auth.decorators import login_required
 from .models import Empleado, Equipo, Ruta, Actividad
-from .forms import EmpleadoForm
+from .forms import EmpleadoForm, EquipoForm
 
 #@login_required
 def index(request):
@@ -75,3 +74,34 @@ def eliminar_empleado(request, id_empleado):
         empleado.delete()
         return redirect('lista_personal')
     return redirect('lista_personal')
+
+def crear_equipo(request):
+    if request.method == 'POST':
+        form = EquipoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Equipo creado exitosamente.')
+            return redirect('lista_equipos')
+    else:
+        form = EquipoForm()
+    return render(request, 'crear_equipo.html', {'form': form})
+
+def editar_equipo(request, id_item):
+    equipo = get_object_or_404(Equipo, id_equipo=id_item)
+    if request.method == 'POST':
+        form = EquipoForm(request.POST, instance=equipo)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Equipo actualizado exitosamente.')
+            return redirect('lista_equipos')
+    else:
+        form = EquipoForm(instance=equipo)
+    return render(request, 'editar_equipo.html', {'form': form, 'equipo': equipo})
+
+def eliminar_equipo(request, id_item):
+    equipo = get_object_or_404(Equipo, id_equipo=id_item)
+    if request.method == 'POST':
+        equipo.delete()
+        messages.success(request, 'Equipo eliminado exitosamente.')
+        return redirect('lista_equipos')
+    return render(request, 'eliminar_equipo.html', {'equipo': equipo})
