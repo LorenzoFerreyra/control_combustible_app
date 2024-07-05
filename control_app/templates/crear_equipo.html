@@ -1,0 +1,64 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-custom text-white">
+                    <h2 class="mb-0">Crear equipo</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_numero_interno" class="form-label">Número Interno</label>
+                            <input type="number" id="id_numero_interno" name="numero_interno" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_tipo_equipo" class="form-label">Tipo de Equipo</label>
+                            <input type="text" id="id_tipo_equipo" name="tipo_equipo" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_sam" class="form-label">SAM</label>
+                            <input type="text" id="id_sam" name="sam" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_nuevo_codigo" class="form-label">Nuevo Código</label>
+                            <input type="text" id="id_nuevo_codigo" name="nuevo_codigo" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_año" class="form-label">Año</label>
+                            <input type="number" id="id_año" name="año" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_marca" class="form-label">Marca</label>
+                            <input type="text" id="id_marca" name="marca" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_modelo_maquina" class="form-label">Modelo de Máquina</label>
+                            <input type="text" id="id_modelo_maquina" name="modelo_maquina" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_consumo_promedio" class="form-label">Consumo Promedio</label>
+                            <input type="text" id="id_consumo_promedio" name="consumo_promedio" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_fecha_actualizacion" class="form-label">Fecha de Actualización</label>
+                            <input type="date" id="id_fecha_actualizacion" name="fecha_actualizacion" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_ubicacion" class="form-label">Ubicación</label>
+                            <input type="text" id="id_ubicacion" name="ubicacion" class="form-control">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-custom">Crear equipo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
