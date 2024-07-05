@@ -121,8 +121,8 @@ def crear_ruta(request):
         form = RutaForm()
     return render(request, 'crear_ruta.html', {'form': form})
 
-def editar_ruta(request, id):
-    ruta = get_object_or_404(Ruta, id=id)
+def editar_ruta(request, ruta):
+    ruta = get_object_or_404(Ruta, ruta=ruta)
     if request.method == 'POST':
         form = RutaForm(request.POST, instance=ruta)
         if form.is_valid():
@@ -133,8 +133,8 @@ def editar_ruta(request, id):
         form = RutaForm(instance=ruta)
     return render(request, 'editar_ruta.html', {'form': form, 'ruta': ruta})
 
-def eliminar_ruta(request, id):
-    ruta = get_object_or_404(Ruta, id=id)
+def eliminar_ruta(request, ruta):
+    ruta = get_object_or_404(Ruta, ruta=ruta)
     if request.method == 'POST':
         ruta.delete()
         messages.success(request, 'Ruta eliminada exitosamente.')
