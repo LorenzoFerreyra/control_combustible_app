@@ -11,7 +11,7 @@
 <body>
     <h1 class="page-title">Lista de personal</h1>
     <a href="{% url 'crear_empleado' %}" class="card-header bg-custom mb-3">Crear empleado</a>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>ID Empleado</th>
@@ -53,7 +53,7 @@
         </tbody>
     </table>
 </body>
-{% endblock %}
+
 
 <!-- Modal de confirmación -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -76,9 +76,7 @@
         </div>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_js %}
 <script>
     var deleteModal = document.getElementById('deleteModal');
     deleteModal.addEventListener('show.bs.modal', function (event) {
