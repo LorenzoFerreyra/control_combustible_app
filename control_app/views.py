@@ -53,7 +53,7 @@ def crear_empleado(request):
         form = EmpleadoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('lista_empleados')
+            return redirect('lista_personal')
     else:
         form = EmpleadoForm()
     return render(request, 'crear_empleado.html', {'form': form})
@@ -64,7 +64,7 @@ def editar_empleado(request, id_empleado):
         form = EmpleadoForm(request.POST, instance=empleado)
         if form.is_valid():
             form.save()
-            return redirect('lista_empleados')
+            return redirect('lista_personal')
     else:
         form = EmpleadoForm(instance=empleado)
     return render(request, 'editar_empleado.html', {'form': form, 'empleado': empleado})
@@ -73,5 +73,5 @@ def eliminar_empleado(request, id_empleado):
     empleado = get_object_or_404(Empleado, id_empleado=id_empleado)
     if request.method == 'POST':
         empleado.delete()
-        return redirect('lista_empleados')
+        return redirect('lista_personal')
     return render(request, 'eliminar_empleado.html', {'empleado': empleado})
