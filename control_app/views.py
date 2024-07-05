@@ -74,4 +74,4 @@ def eliminar_empleado(request, id_empleado):
     if request.method == 'POST':
         empleado.delete()
         return redirect('lista_personal')
-    return render(request, 'eliminar_empleado.html', {'empleado': empleado})
+    return redirect('lista_personal')

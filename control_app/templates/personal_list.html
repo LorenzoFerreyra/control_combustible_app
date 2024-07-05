@@ -46,11 +46,46 @@
                 <td>{{ empleado.admin }}</td>
                 <td>
                     <a href="{% url 'editar_empleado' empleado.id_empleado %}" class="btn btn-sm btn-info">Editar</a>
-                    <a href="{% url 'eliminar_empleado' empleado.id_empleado %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ empleado.id_empleado }}">Eliminar</button>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </body>
+{% endblock %}
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que quieres eliminar este empleado?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form id="deleteForm" method="post" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    var deleteModal = document.getElementById('deleteModal');
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var idEmpleado = button.getAttribute('data-id');
+        var form = document.getElementById('deleteForm');
+        form.action = '/eliminar_empleado/' + idEmpleado + '/';
+    });
+</script>
 {% endblock %}
