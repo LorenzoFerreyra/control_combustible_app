@@ -12,4 +12,12 @@ urlpatterns = [
     path('crear_equipo/', views.crear_equipo, name='crear_equipo'),
     path('editar_equipo/<uuid:id_item>/', views.editar_equipo, name='editar_equipo'),
     path('eliminar_equipo/<uuid:id_item>/', views.eliminar_equipo, name='eliminar_equipo'),
+    path('ruta_list/', views.equipo_list, name='lista_ruta'),
+    path('crear_ruta/', views.crear_ruta, name='crear_ruta'),
+    path('editar_ruta/<ruta>/', views.editar_ruta, name='editar_ruta'),
+    path('eliminar_ruta/<ruta>/', views.eliminar_ruta, name='eliminar_ruta'),
+    path('actividad_list/', views.actividad_list, name='lista_actividad'),
+    path('crear_actividad/', views.crear_actividad, name='crear_actividad'),
+    path('editar_actividad/<id>/', views.editar_actividad, name='editar_actividad'),
+    path('eliminar_actividad/<id>/', views.eliminar_actividad, name='eliminar_actividad'),
 ]
