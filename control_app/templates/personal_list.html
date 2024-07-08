@@ -14,7 +14,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID Empleado</th>
+                <th>Índice</th>
                 <th>RES</th>
                 <th>Ubicación Actual</th>
                 <th>Apellido Paterno</th>
@@ -32,7 +32,7 @@
         <tbody>
             {% for empleado in personal %}
             <tr>
-                <td>{{ empleado.id_empleado }}</td>
+                <td>{{ forloop.counter }}</td>
                 <td>{{ empleado.res }}</td>
                 <td>{{ empleado.ub_actual }}</td>
                 <td>{{ empleado.paterno }}</td>

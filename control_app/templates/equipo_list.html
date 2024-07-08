@@ -14,22 +14,30 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID Equipo</th>
-                <th>Nombre</th>
+                <th>N.° interno</th>
                 <th>Tipo</th>
+                <th>SAM</th>
+                <th>Año</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Consumo promedio</th>
+                <th>Última actualización</th>
                 <th>Ubicación</th>
-                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             {% for equipo in equipos %}
             <tr>
-                <td>{{ equipo.id_item }}</td>
-                <td>{{ equipo.nombre }}</td>
+                <td>{{ equipo.numero_interno }}</td>
                 <td>{{ equipo.tipo }}</td>
+                <td>{{ equipo.sam }}</td>
+                <td>{{ equipo.año }}</td>
+                <td>{{ equipo.marca }}</td>
+                <td>{{ equipo.modelo_maquina }}</td>
+                <td>{{ equipo.consumo_promedio }}</td>
+                <td>{{ equipo.fecha_actualizacion }}</td>
                 <td>{{ equipo.ubicacion }}</td>
-                <td>{{ equipo.estado }}</td>
                 <td>
                     <a href="{% url 'editar_equipo' equipo.id_item %}" class="btn btn-sm btn-info">Editar</a>
                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ equipo.id_item }}">Eliminar</button>

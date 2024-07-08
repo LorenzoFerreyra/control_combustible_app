@@ -52,7 +52,7 @@ class Equipo(models.Model):
     marca = models.CharField(max_length=255, verbose_name="MARCA")
     modelo_maquina = models.CharField(max_length=255, verbose_name="MOD. MAQ.")
     consumo_promedio = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="CONSUM. PROM")
-    fecha_actualizacion = models.DateField(verbose_name="FECHA DE ACTUALIZACION")
+    fecha_actualizacion = models.DateTimeField(auto_now=True, verbose_name="FECHA DE ACTUALIZACION")
     ubicacion = models.CharField(max_length=255, verbose_name="UBICACIÓN")
 
     def __str__(self):
