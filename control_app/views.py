@@ -52,7 +52,8 @@ def crear_empleado(request):
         form = EmpleadoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('lista_personal')
+            messages.success(request, 'Empleado creado exitosamente.')
+            return redirect('crear_empleado')
     else:
         form = EmpleadoForm()
     return render(request, 'crear_empleado.html', {'form': form})

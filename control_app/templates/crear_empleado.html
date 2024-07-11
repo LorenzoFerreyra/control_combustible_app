@@ -10,60 +10,37 @@
                     <h2 class="mb-0">Crear empleado</h2>
                 </div>
                 <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                     <form method="post">
                         {% csrf_token %}
-                        <div class="row">
-                            
+                        {% for field in form %}
+                            {% if forloop.counter0|divisibleby:2 %}
+                                <div class="row">
+                            {% endif %}
                             <div class="col-md-6 mb-3">
-                                <label for="id_res" class="form-label">RES</label>
-                                <input type="text" id="id_res" name="res" class="form-control">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                {% if field.name in 'ingreso,salida' %}
+                                    <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" name="{{ field.name }}" class="form-control" {% if field.value %}value="{{ field.value|date:'Y-m-d' }}"{% endif %}>
+                                {% else %}
+                                    <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" name="{{ field.name }}" class="form-control" {% if field.value %}value="{{ field.value }}"{% endif %}>
+                                {% endif %}
+                                {% if field.errors %}
+                                    <div class="text-danger">
+                                        {{ field.errors.as_text }}
+                                    </div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="id_ub_actual" class="form-label">Ubicación actual</label>
-                                <input type="text" id="id_ub_actual" name="ub_actual" class="form-control">
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="id_paterno" class="form-label">Apellido paterno</label>
-                                <input type="text" id="id_paterno" name="paterno" class="form-control">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="id_materno" class="form-label">Apellido materno</label>
-                                <input type="text" id="id_materno" name="materno" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="id_nom1" class="form-label">Primer nombre</label>
-                                <input type="text" id="id_nom1" name="nom1" class="form-control">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="id_nom2" class="form-label">Segundo nombre</label>
-                                <input type="text" id="id_nom2" name="nom2" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="id_cargo" class="form-label">Cargo</label>
-                                <input type="text" id="id_cargo" name="cargo" class="form-control">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="id_nivel" class="form-label">Nivel</label>
-                                <input type="text" id="id_nivel" name="nivel" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="id_ingreso" class="form-label">Fecha de ingreso</label>
-                                <input type="date" id="id_ingreso" name="ingreso" class="form-control">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="id_salida" class="form-label">Fecha de salida</label>
-                                <input type="date" id="id_salida" name="salida" class="form-control">
-                            </div>
-                        </div>
+                            {% if forloop.counter|divisibleby:2 or forloop.last %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                         <div class="text-center">
                             <button type="submit" class="btn btn-custom">Crear empleado</button>
                         </div>
