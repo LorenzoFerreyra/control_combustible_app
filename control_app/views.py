@@ -128,7 +128,7 @@ def editar_ruta(request, ruta):
         form = RutaForm(request.POST, instance=ruta)
         if form.is_valid():
             form.save()
-            return redirect('editar_ruta')
+            return redirect('lista_ruta')
     else:
         form = RutaForm(instance=ruta)
     return render(request, 'editar_ruta.html', {'form': form, 'ruta': ruta})

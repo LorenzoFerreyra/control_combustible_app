@@ -6,10 +6,15 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    table-layout: fixed;
+    overflow: hidden;
 }
 
 .table, th, td {
     border: 1px solid #ddd;
+    max-width: 200px; /* ajusta según necesites */
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 h1,h2,h3,h4,h5,h6 { 
