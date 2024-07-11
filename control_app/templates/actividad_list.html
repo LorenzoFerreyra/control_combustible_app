@@ -5,45 +5,46 @@
 <div class="container mt-5">
     <h2>Lista de actividades</h2>
     <a href="{% url 'crear_actividad' %}" class="card-header bg-custom mb-3">Crear actividad</a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Grupo</th>
-                <th>Actividad</th>
-                <th>Subactividad</th>
-                <th>Unidad</th>
-                <th>Producción diaria mínima</th>
-                <th>Producción diaria máxima</th>
-                <th>Producción diaria promedio</th>
-                <th>Producción unidad/hora prom.</th>
-                <th>Producción hora/unidad prom.</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for actividad in actividades %}
-            <tr>
-                <td>{{ actividad.codigo }}</td>
-                <td>{{ actividad.grupo }}</td>
-                <td>{{ actividad.actividad }}</td>
-                <td>{{ actividad.subactividad }}</td>
-                <td>{{ actividad.unidad }}</td>
-                <td>{{ actividad.produccion_diaria_min }}</td>
-                <td>{{ actividad.produccion_diaria_max }}</td>
-                <td>{{ actividad.produccion_diaria_prom }}</td>
-                <td>{{ actividad.produccion_unid_hr_prom }}</td>
-                <td>{{ actividad.produccion_hr_unid_prom }}</td>
-                <td>
-                    <a href="{% url 'editar_actividad' actividad.id %}" class="btn btn-warning">Editar</a>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ actividad.id }}">Eliminar</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Grupo</th>
+                    <th>Actividad</th>
+                    <th>Subactividad</th>
+                    <th>Unidad</th>
+                    <th>Producción diaria mínima</th>
+                    <th>Producción diaria máxima</th>
+                    <th>Producción diaria promedio</th>
+                    <th>Producción unidad/hora prom.</th>
+                    <th>Producción hora/unidad prom.</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for actividad in actividades %}
+                <tr>
+                    <td>{{ actividad.codigo }}</td>
+                    <td>{{ actividad.grupo }}</td>
+                    <td>{{ actividad.actividad }}</td>
+                    <td>{{ actividad.subactividad }}</td>
+                    <td>{{ actividad.unidad }}</td>
+                    <td>{{ actividad.produccion_diaria_min }}</td>
+                    <td>{{ actividad.produccion_diaria_max }}</td>
+                    <td>{{ actividad.produccion_diaria_prom }}</td>
+                    <td>{{ actividad.produccion_unid_hr_prom }}</td>
+                    <td>{{ actividad.produccion_hr_unid_prom }}</td>
+                    <td>
+                        <a href="{% url 'editar_actividad' actividad.id %}" class="btn btn-warning">Editar</a>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ actividad.id }}">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

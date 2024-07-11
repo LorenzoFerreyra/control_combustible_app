@@ -10,49 +10,50 @@
 <body>
     <h1 class="page-title">Lista de rutas</h1>
     <a href="{% url 'crear_ruta' %}" class="card-header bg-custom mb-3">Crear ruta</a>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Distrito</th>
-                <th>Zona</th>
-                <th>Sección</th>
-                <th>Longitud (km)</th>
-                <th>Tramo</th>
-                <th>Salida</th>
-                <th>Destino</th>
-                <th>Pavimento</th>
-                <th>Empedrado</th>
-                <th>Ripio</th>
-                <th>Tierra</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ruta in rutas %}
-            <tr>
-                <td>{{ ruta.ruta }}</td>
-                <td>{{ ruta.distrito }}</td>
-                <td>{{ ruta.zona }}</td>
-                <td>{{ ruta.seccion }}</td>
-                <td>{{ ruta.longitud_km }}</td>
-                <td>{{ ruta.tramo }}</td>
-                <td>{{ ruta.lugar_inicial }}</td>
-                <td>{{ ruta.lugar_final }}</td>
-                <td>{{ ruta.pavimento }}</td>
-                <td>{{ ruta.empedrado }}</td>
-                <td>{{ ruta.ripio }}</td>
-                <td>{{ ruta.tierra }}</td>
-                <td>
-                    <a href="{% url 'editar_ruta' ruta.ruta %}" class="btn btn-sm btn-info">Editar</a>
-                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ ruta.ruta }}">Eliminar</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Distrito</th>
+                    <th>Zona</th>
+                    <th>Sección</th>
+                    <th>Longitud (km)</th>
+                    <th>Tramo</th>
+                    <th>Salida</th>
+                    <th>Destino</th>
+                    <th>Pavimento</th>
+                    <th>Empedrado</th>
+                    <th>Ripio</th>
+                    <th>Tierra</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ruta in rutas %}
+                <tr>
+                    <td>{{ ruta.ruta }}</td>
+                    <td>{{ ruta.distrito }}</td>
+                    <td>{{ ruta.zona }}</td>
+                    <td>{{ ruta.seccion }}</td>
+                    <td>{{ ruta.longitud_km }}</td>
+                    <td>{{ ruta.tramo }}</td>
+                    <td>{{ ruta.lugar_inicial }}</td>
+                    <td>{{ ruta.lugar_final }}</td>
+                    <td>{{ ruta.pavimento }}</td>
+                    <td>{{ ruta.empedrado }}</td>
+                    <td>{{ ruta.ripio }}</td>
+                    <td>{{ ruta.tierra }}</td>
+                    <td>
+                        <a href="{% url 'editar_ruta' ruta.ruta %}" class="btn btn-sm btn-info">Editar</a>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ ruta.ruta }}">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

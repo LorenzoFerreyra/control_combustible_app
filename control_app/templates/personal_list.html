@@ -11,45 +11,46 @@
 <body>
     <h1 class="page-title">Lista de personal</h1>
     <a href="{% url 'crear_empleado' %}" class="card-header bg-custom mb-3">Crear empleado</a>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Índice</th>
-                <th>Ubicación Actual</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>Nombre</th>
-                <th>Cargo</th>
-                <th>Nivel</th>
-                <th>Ingreso</th>
-                <th>Salida</th>
-                <th>Admin</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for empleado in personal %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ empleado.ub_actual }}</td>
-                <td>{{ empleado.paterno }}</td>
-                <td>{{ empleado.materno }}</td>
-                <td>{{ empleado.nom1 }}</td>
-                <td>{{ empleado.cargo }}</td>
-                <td>{{ empleado.nivel }}</td>
-                <td>{{ empleado.ingreso }}</td>
-                <td>{{ empleado.salida }}</td>
-                <td>{{ empleado.admin }}</td>
-                <td>
-                    <a href="{% url 'editar_empleado' empleado.id_empleado %}" class="btn btn-sm btn-info">Editar</a>
-                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ empleado.id_empleado }}">Eliminar</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Índice</th>
+                    <th>Ubicación Actual</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Nombre</th>
+                    <th>Cargo</th>
+                    <th>Nivel</th>
+                    <th>Ingreso</th>
+                    <th>Salida</th>
+                    <th>Admin</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for empleado in personal %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ empleado.ub_actual }}</td>
+                    <td>{{ empleado.paterno }}</td>
+                    <td>{{ empleado.materno }}</td>
+                    <td>{{ empleado.nom1 }}</td>
+                    <td>{{ empleado.cargo }}</td>
+                    <td>{{ empleado.nivel }}</td>
+                    <td>{{ empleado.ingreso }}</td>
+                    <td>{{ empleado.salida }}</td>
+                    <td>{{ empleado.admin }}</td>
+                    <td>
+                        <a href="{% url 'editar_empleado' empleado.id_empleado %}" class="btn btn-sm btn-info">Editar</a>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ empleado.id_empleado }}">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</div>
 
 <!-- Modal de confirmación -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
