@@ -9,7 +9,7 @@ class CustomForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            if isinstance(field, (forms.CharField, forms.DateField)):
+            if isinstance(field, (forms.CharField, forms.DateField, forms.IntegerField)):
                 field.error_messages['required'] = FORM_FIELD_REQUIRED_MESSAGE
 
 
@@ -25,7 +25,8 @@ class EmpleadoForm(CustomForm):
 class EquipoForm(CustomForm):
     class Meta:
         model = Equipo
-        fields = '__all__'
+        fields = ['numero_interno', 'tipo_equipo', 'sam', 'nuevo_codigo','año', 'marca', 'modelo_maquina',
+                  'consumo_promedio', 'ubicacion']
         
 class RutaForm(CustomForm):
     class Meta:
