@@ -82,7 +82,7 @@ def crear_equipo(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Equipo creado exitosamente.')
-            return redirect('lista_equipo')
+            return redirect('crear_equipo')
     else:
         form = EquipoForm()
     return render(request, 'crear_equipo.html', {'form': form})

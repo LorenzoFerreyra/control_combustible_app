@@ -15,12 +15,10 @@
         <thead>
             <tr>
                 <th>Índice</th>
-                <th>RES</th>
                 <th>Ubicación Actual</th>
                 <th>Apellido Paterno</th>
                 <th>Apellido Materno</th>
-                <th>Nombre 1</th>
-                <th>Nombre 2</th>
+                <th>Nombre</th>
                 <th>Cargo</th>
                 <th>Nivel</th>
                 <th>Ingreso</th>
@@ -33,12 +31,10 @@
             {% for empleado in personal %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ empleado.res }}</td>
                 <td>{{ empleado.ub_actual }}</td>
                 <td>{{ empleado.paterno }}</td>
                 <td>{{ empleado.materno }}</td>
                 <td>{{ empleado.nom1 }}</td>
-                <td>{{ empleado.nom2 }}</td>
                 <td>{{ empleado.cargo }}</td>
                 <td>{{ empleado.nivel }}</td>
                 <td>{{ empleado.ingreso }}</td>
