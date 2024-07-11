@@ -142,3 +142,7 @@ th {
 .card-header.bg-custom {
     background-color: #4CAF50 !important;
 }
+
+.button-spacing {
+    margin-bottom: 10px;
+}

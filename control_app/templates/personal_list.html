@@ -10,7 +10,7 @@
 </head>
 <body>
     <h1 class="page-title">Lista de personal</h1>
-    <a href="{% url 'crear_empleado' %}" class="card-header bg-custom mb-3">Crear empleado</a>
+    <a href="{% url 'crear_empleado' %}" class="class=btn btn-sm">Crear empleado</a>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -42,8 +42,10 @@
                     <td>{{ empleado.salida }}</td>
                     <td>{{ empleado.admin }}</td>
                     <td>
-                        <a href="{% url 'editar_empleado' empleado.id_empleado %}" class="btn btn-sm btn-info">Editar</a>
-                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ empleado.id_empleado }}">Eliminar</button>
+                        <div class="d-flex flex-column" style="gap: 10px;">
+                            <a href="{% url 'editar_empleado' empleado.id_empleado %}" class="btn btn-sm btn-info">Editar</a>
+                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ empleado.id_empleado }}">Eliminar</button>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}

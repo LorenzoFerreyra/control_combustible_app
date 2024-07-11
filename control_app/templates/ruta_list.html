@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1 class="page-title">Lista de rutas</h1>
-    <a href="{% url 'crear_ruta' %}" class="card-header bg-custom mb-3">Crear ruta</a>
+    <a href="{% url 'crear_ruta' %}" class="class=btn btn-sm">Crear ruta</a>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -45,8 +45,10 @@
                     <td>{{ ruta.ripio }}</td>
                     <td>{{ ruta.tierra }}</td>
                     <td>
-                        <a href="{% url 'editar_ruta' ruta.ruta %}" class="btn btn-sm btn-info">Editar</a>
-                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ ruta.ruta }}">Eliminar</button>
+                        <div class="d-flex flex-column" style="gap: 10px;">
+                            <a href="{% url 'editar_ruta' ruta.ruta %}" class="btn btn-sm btn-info">Editar</a>
+                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ ruta.ruta }}">Eliminar</button>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}

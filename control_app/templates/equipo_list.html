@@ -10,7 +10,7 @@
 </head>
 <body>
     <h1 class="page-title">Lista de equipos</h1>
-    <a href="{% url 'crear_equipo' %}" class="card-header bg-custom mb-3">Crear equipo</a>
+    <a href="{% url 'crear_equipo' %}" class="class=btn btn-sm">Crear equipo</a>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -40,8 +40,10 @@
                     <td>{{ equipo.fecha_actualizacion }}</td>
                     <td>{{ equipo.ubicacion }}</td>
                     <td>
-                        <a href="{% url 'editar_equipo' equipo.id_item %}" class="btn btn-sm btn-info">Editar</a>
-                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ equipo.id_item }}">Eliminar</button>
+                        <div class="d-flex flex-column" style="gap: 10px;">
+                            <a href="{% url 'editar_equipo' equipo.id_item %}" class="btn btn-sm btn-info">Editar</a>
+                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ equipo.id_item }}">Eliminar</button>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
