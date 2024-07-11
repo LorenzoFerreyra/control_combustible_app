@@ -16,7 +16,7 @@ class Empleado(models.Model):
     nom2 = models.CharField(max_length=255, null=True, blank=True, verbose_name="NOM 2")
     cargo = models.CharField(max_length=255, verbose_name="CARGO")
     nivel = models.CharField(max_length=255, verbose_name="NIVEL", blank=True)
-    ingreso = models.DateField(verbose_name="INGRESO", blank=True)
+    ingreso = models.DateField(verbose_name="INGRESO", blank=True, null=True)
     salida = models.DateField(null=True, blank=True, verbose_name="SALIDA")
     admin = models.BooleanField(default=False, verbose_name="Admin")
 

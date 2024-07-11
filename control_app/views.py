@@ -73,6 +73,7 @@ def eliminar_empleado(request, id_empleado):
     empleado = get_object_or_404(Empleado, id_empleado=id_empleado)
     if request.method == 'POST':
         empleado.delete()
+        messages.error(request, 'Empleado eliminado exitosamente.')
         return redirect('lista_personal')
     return redirect('lista_personal')
 
@@ -93,7 +94,6 @@ def editar_equipo(request, id_item):
         form = EquipoForm(request.POST, instance=equipo)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Equipo actualizado exitosamente.')
             return redirect('lista_equipo')
     else:
         form = EquipoForm(instance=equipo)
@@ -103,7 +103,7 @@ def eliminar_equipo(request, id_item):
     equipo = get_object_or_404(Equipo, id_item=id_item)
     if request.method == 'POST':
         equipo.delete()
-        messages.success(request, 'Equipo eliminado exitosamente.')
+        messages.error(request, 'Equipo eliminado exitosamente.')
         return redirect('lista_equipo')
     return redirect('lista_equipo')
 
@@ -128,8 +128,7 @@ def editar_ruta(request, ruta):
         form = RutaForm(request.POST, instance=ruta)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Ruta actualizada exitosamente.')
-            return redirect('lista_ruta')
+            return redirect('editar_ruta')
     else:
         form = RutaForm(instance=ruta)
     return render(request, 'editar_ruta.html', {'form': form, 'ruta': ruta})
@@ -138,7 +137,7 @@ def eliminar_ruta(request, ruta):
     ruta = get_object_or_404(Ruta, ruta=ruta)
     if request.method == 'POST':
         ruta.delete()
-        messages.success(request, 'Ruta eliminada exitosamente.')
+        messages.error(request, 'Ruta eliminada exitosamente.')
         return redirect('lista_ruta')
     return redirect('lista_ruta')
 
@@ -163,7 +162,6 @@ def editar_actividad(request, id):
         form = ActividadForm(request.POST, instance=actividad)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Actividad actualizada exitosamente.')
             return redirect('lista_actividad')
     else:
         form = ActividadForm(instance=actividad)
@@ -173,6 +171,6 @@ def eliminar_actividad(request, id):
     actividad = get_object_or_404(Actividad, id=id)
     if request.method == 'POST':
         actividad.delete()
-        messages.success(request, 'Actividad eliminada exitosamente.')
+        messages.error(request, 'Actividad eliminada exitosamente.')
         return redirect('lista_actividad')
     return redirect('lista_actividad')
