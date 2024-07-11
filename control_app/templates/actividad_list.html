@@ -2,11 +2,17 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2>Lista de actividades</h2>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de actividades</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h1 class="page-title">Lista de actividades</h1>
     <a href="{% url 'crear_actividad' %}" class="card-header bg-custom mb-3">Crear actividad</a>
     <div class="table-responsive">
-        <table class="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Código</th>
@@ -36,8 +42,8 @@
                     <td>{{ actividad.produccion_unid_hr_prom }}</td>
                     <td>{{ actividad.produccion_hr_unid_prom }}</td>
                     <td>
-                        <a href="{% url 'editar_actividad' actividad.id %}" class="btn btn-warning">Editar</a>
-                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ actividad.id }}">Eliminar</button>
+                        <a href="{% url 'editar_actividad' actividad.id %}" class="btn btn-sm btn-info">Editar</a>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ actividad.id }}">Eliminar</button>
                     </td>
                 </tr>
                 {% endfor %}
