@@ -13,19 +13,17 @@
                     <form method="post">
                         {% csrf_token %}
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="id_id_empleado" class="form-label">ID Empleado</label>
-                                <input type="text" id="id_id_empleado" name="id_empleado" class="form-control" required>
-                            </div>
+                            
                             <div class="col-md-6 mb-3">
                                 <label for="id_res" class="form-label">RES</label>
                                 <input type="text" id="id_res" name="res" class="form-control">
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_ub_actual" class="form-label">Ubicación actual</label>
+                                <input type="text" id="id_ub_actual" name="ub_actual" class="form-control">
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="id_ub_actual" class="form-label">Ubicación actual</label>
-                            <input type="text" id="id_ub_actual" name="ub_actual" class="form-control">
-                        </div>
+                        
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="id_paterno" class="form-label">Apellido paterno</label>
@@ -65,14 +63,6 @@
                                 <label for="id_salida" class="form-label">Fecha de salida</label>
                                 <input type="date" id="id_salida" name="salida" class="form-control">
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_admin" class="form-label">Admin</label>
-                            <select id="id_admin" name="admin" class="form-select">
-                                <option value="">Seleccione...</option>
-                                <option value="1">Sí</option>
-                                <option value="0">No</option>
-                            </select>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-custom">Crear empleado</button>
