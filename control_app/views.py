@@ -117,7 +117,7 @@ def crear_ruta(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Ruta creada exitosamente.')
-            return redirect('lista_ruta')
+            return redirect('crear_ruta')
     else:
         form = RutaForm()
     return render(request, 'crear_ruta.html', {'form': form})

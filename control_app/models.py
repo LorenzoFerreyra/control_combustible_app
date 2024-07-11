@@ -74,17 +74,17 @@ class Ruta(models.Model):
         ('Norte', 'Norte'),
     ]
     zona = models.CharField(max_length=10, choices=ZONA_CHOICES, verbose_name="ZONA")
-    seccion = models.CharField(max_length=255, verbose_name="SECCION")
+    seccion = models.CharField(max_length=255, verbose_name="SECCION", blank=True)
     longitud_km = models.IntegerField(verbose_name="LONG. Km")
-    km_inicial = models.IntegerField(verbose_name="KM INICIAL")
-    km_final = models.IntegerField(verbose_name="KM FINAL")
+    km_inicial = models.IntegerField(verbose_name="KM INICIAL", blank=True)
+    km_final = models.IntegerField(verbose_name="KM FINAL", blank=True)
     tramo = models.CharField(max_length=255, verbose_name="TRAMO")
     lugar_inicial = models.CharField(max_length=255, verbose_name="LUGAR INICIAL")
     lugar_final = models.CharField(max_length=255, verbose_name="LUGAR FINAL")
-    pavimento = models.BooleanField(default=False, verbose_name="PAV.")
-    empedrado = models.BooleanField(default=False, verbose_name="EMPEDRADO")
-    ripio = models.BooleanField(default=False, verbose_name="RIPIO")
-    tierra = models.BooleanField(default=False, verbose_name="TIERRA")
+    pavimento = models.BooleanField(default=False, verbose_name="PAV.", blank=True)
+    empedrado = models.BooleanField(default=False, verbose_name="EMPEDRADO", blank=True)
+    ripio = models.BooleanField(default=False, verbose_name="RIPIO", blank=True)
+    tierra = models.BooleanField(default=False, verbose_name="TIERRA", blank=True)
 
     def __str__(self):
         return self.ruta

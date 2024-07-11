@@ -31,7 +31,8 @@ class EquipoForm(CustomForm):
 class RutaForm(CustomForm):
     class Meta:
         model = Ruta
-        fields = '__all__'
+        fields = ['ruta', 'distrito','zona', 'seccion', 'longitud_km','km_inicial', 'km_final', 'tramo','lugar_inicial','lugar_final',
+                  'pavimento', 'empedrado','ripio', 'tierra']
 
 class ActividadForm(CustomForm):
     class Meta:
