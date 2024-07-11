@@ -10,56 +10,37 @@
                     <h2 class="mb-0">Editar equipo</h2>
                 </div>
                 <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                     <form method="post">
                         {% csrf_token %}
-                        <div class="row">
+                        {% for field in form %}
+                            {% if forloop.counter0|divisibleby:2 %}
+                                <div class="row">
+                            {% endif %}
                             <div class="col-md-6 mb-3">
-                                <label for="id_id_item" class="form-label">ID Item</label>
-                                <input type="text" id="id_id_item" name="id_item" class="form-control" value="{{ equipo.id_item }}" readonly>
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                {% if field.name in 'ingreso,salida' %}
+                                    <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" name="{{ field.name }}" class="form-control" {% if field.value %}value="{{ field.value|date:'Y-m-d' }}"{% endif %}>
+                                {% else %}
+                                    <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" name="{{ field.name }}" class="form-control" {% if field.value %}value="{{ field.value }}"{% endif %}>
+                                {% endif %}
+                                {% if field.errors %}
+                                    <div class="text-danger">
+                                        {{ field.errors.as_text }}
+                                    </div>
+                                {% endif %}
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="id_numero_interno" class="form-label">Número Interno</label>
-                                <input type="number" id="id_numero_interno" name="numero_interno" class="form-control" value="{{ equipo.numero_interno }}" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_tipo_equipo" class="form-label">Tipo de Equipo</label>
-                            <input type="text" id="id_tipo_equipo" name="tipo_equipo" class="form-control" value="{{ equipo.tipo_equipo }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_sam" class="form-label">SAM</label>
-                            <input type="text" id="id_sam" name="sam" class="form-control" value="{{ equipo.sam }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_nuevo_codigo" class="form-label">Nuevo Código</label>
-                            <input type="text" id="id_nuevo_codigo" name="nuevo_codigo" class="form-control" value="{{ equipo.nuevo_codigo }}">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="id_año" class="form-label">Año</label>
-                                <input type="number" id="id_año" name="año" class="form-control" value="{{ equipo.año }}" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="id_marca" class="form-label">Marca</label>
-                                <input type="text" id="id_marca" name="marca" class="form-control" value="{{ equipo.marca }}" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_modelo_maquina" class="form-label">Modelo de Máquina</label>
-                            <input type="text" id="id_modelo_maquina" name="modelo_maquina" class="form-control" value="{{ equipo.modelo_maquina }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_consumo_promedio" class="form-label">Consumo Promedio</label>
-                            <input type="text" id="id_consumo_promedio" name="consumo_promedio" class="form-control" value="{{ equipo.consumo_promedio }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_fecha_actualizacion" class="form-label">Fecha de Actualización</label>
-                            <input type="date" id="id_fecha_actualizacion" name="fecha_actualizacion" class="form-control" value="{{ equipo.fecha_actualizacion }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_ubicacion" class="form-label">Ubicación</label>
-                            <input type="text" id="id_ubicacion" name="ubicacion" class="form-control" value="{{ equipo.ubicacion }}">
-                        </div>
+                            {% if forloop.counter|divisibleby:2 or forloop.last %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                         <div class="text-center">
                             <button type="submit" class="btn btn-custom">Editar equipo</button>
                         </div>
