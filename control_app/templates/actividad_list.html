@@ -15,6 +15,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>Índice</th>
                     <th>Código</th>
                     <th>Grupo</th>
                     <th>Actividad</th>
@@ -25,12 +26,17 @@
                     <th>Producción diaria promedio</th>
                     <th>Producción unidad/hora prom.</th>
                     <th>Producción hora/unidad prom.</th>
+                    <th>Camioneta</th>
+                    <th>Motoniveladora</th>
+                    <th>Camion aguatero</th>
+                    <th>Bomba de agua</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for actividad in actividades %}
                 <tr>
+                    <td>{{ forloop.counter }}</td>
                     <td>{{ actividad.codigo }}</td>
                     <td>{{ actividad.grupo }}</td>
                     <td>{{ actividad.actividad }}</td>
@@ -41,6 +47,10 @@
                     <td>{{ actividad.produccion_diaria_prom }}</td>
                     <td>{{ actividad.produccion_unid_hr_prom }}</td>
                     <td>{{ actividad.produccion_hr_unid_prom }}</td>
+                    <td>{{ actividad.camioneta }}</td>
+                    <td>{{ actividad.motoniveladora }}</td>
+                    <td>{{ actividad.camion_aguatero }}</td>
+                    <td>{{ actividad.bomba_de_agua }}</td>
                     <td>
                         <div class="d-flex flex-column" style="gap: 10px;">
                             <a href="{% url 'editar_actividad' actividad.id %}" class="btn btn-sm btn-info">Editar</a>
