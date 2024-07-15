@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de equipos</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
 <body>
     <h1 class="page-title">Lista de equipos</h1>
@@ -80,6 +83,35 @@
         var idEquipo = button.getAttribute('data-id');
         var form = document.getElementById('deleteForm');
         form.action = '/eliminar_equipo/' + idEquipo + '/';
+    });
+    $(document).ready(function() {
+        $('table').DataTable({
+            responsive: true,
+            scrollX: true,
+            autoWidth: false,
+            columnDefs: [
+                {
+                    targets: '_all',
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="text-wrap" style="white-space: normal; word-break: break-word; min-width: 100px; max-width: 200px;">' + data + '</div>';
+                        }
+                        return data;
+                    }
+                },
+                {
+                    targets: -1,
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row) {
+                        return data; // Mantiene la columna de acciones sin cambios
+                    }
+                }
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'
+            }
+        });
     });
 </script>
 {% endblock %}
