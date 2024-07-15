@@ -10,13 +10,33 @@
     overflow: hidden;
 }
 
-.th, td {
+.th {
     border: 1px solid #ddd;
     max-width: 200px;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
+.td {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+  
+.td:hover::after {
+    content: attr(data-full-text);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #f9f9f9;
+    padding: 5px;
+    border: 1px solid #ddd;
+    z-index: 1;
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 300px;
+}
 h1,h2,h3,h4,h5,h6 { 
 	margin: 0;
 	color:#444a57;
