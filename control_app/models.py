@@ -44,8 +44,8 @@ class Equipo(models.Model):
     id_item = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
 
     # Otros campos...
-    numero_interno = models.CharField(max_length=100,verbose_name="N° INT.")
-    tipo_equipo = models.CharField(max_length=255, verbose_name="TIPO EQUIPO", unique=True)
+    numero_interno = models.CharField(max_length=100,verbose_name="N° INT.", unique=True)
+    tipo_equipo = models.CharField(max_length=255, verbose_name="TIPO EQUIPO")
     sam = models.CharField(max_length=255, verbose_name="SAM", blank=True)
     nuevo_codigo = models.CharField(max_length=255, verbose_name="NUEVO COD.", blank=True)
     año = models.IntegerField(verbose_name="AÑO", blank=True, null=True)
@@ -249,10 +249,10 @@ class TransaccionCombustible(models.Model):
 class EnTransito(models.Model):
     proyecto = models.ForeignKey('Proyecto_DE5', on_delete=models.CASCADE, verbose_name="Proyecto")
     numero = models.AutoField(primary_key=True, verbose_name="Número")
-    numero_interno = models.IntegerField(verbose_name="Número Interno")
+    numero_interno = models.ForeignKey(Equipo, to_field='numero_interno', on_delete=models.CASCADE, verbose_name="Número Interno")
 
     # Relacionando con el modelo Equipo para obtener el tipo de equipo
-    tipo_equipo = models.ForeignKey(Equipo, to_field='tipo_equipo', on_delete=models.CASCADE, verbose_name="Tipo de Equipo")
+    tipo_equipo = models.CharField(max_length=200)
 
     # Relacionando con el modelo Empleado para obtener el operador
     operador = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name="Operador")
