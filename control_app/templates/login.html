@@ -18,13 +18,15 @@
                 <br/><br/>
                 <form method="POST" action="{% url 'login' %}">
                     {% csrf_token %}
-                    <div class="mb-3">
-                        <input type="text" class="form-control" name="username" placeholder="Ingrese su Nombre de Usuario">
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" class="form-control" name="password" placeholder="Ingrese su Contraseña">
-                    </div>
-                    <br/><br/>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="username" placeholder="Ingrese su nombre de usuario">
+                        <label for="floatingInput">Nombre de usuario</label>
+                      </div>
+                      <div class="form-floating">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <label for="floatingPassword">Contraseña</label>
+                      </div>
+                      <br/><br/>
                     <button type="submit" class="btn btn-secondary">Iniciar sesión</button>
                 </form>
                 <br/><br/>

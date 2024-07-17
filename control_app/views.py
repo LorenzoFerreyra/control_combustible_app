@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Empleado, Equipo, Ruta, Actividad
 from .forms import EmpleadoForm, EquipoForm, RutaForm, ActividadForm
 
-#@login_required
+@login_required
 def index(request):
     return render(request, 'index.html')
 
@@ -25,7 +25,7 @@ def login_user(request):
 	else:
 		return render(request, 'login.html', {})
 
-#@login_required
+@login_required
 def logout_user(request):
 	logout(request)
 	messages.success(request, ("Cerró sesión. Gracias por visitarnos."))
