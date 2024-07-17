@@ -23,7 +23,7 @@
                     <a class="nav-link text-nowrap" href="{% url 'lista_actividad' %}">Actividades</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-nowrap" href="#">Informes</a>
+                    <a class="nav-link text-nowrap" href="{% url 'informes' %}">Informes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-nowrap" href="{% url 'admin:index' %}">Administración</a>
@@ -35,7 +35,7 @@
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link text-nowrap" href="#">Iniciar sesión</a>
+                    <a class="nav-link text-nowrap" href="{% url 'login' %}">Iniciar sesión</a>
                 </li>
                 {% endif %}
             </ul>

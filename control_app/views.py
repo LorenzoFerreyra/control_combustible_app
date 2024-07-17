@@ -174,3 +174,6 @@ def eliminar_actividad(request, id):
         messages.error(request, 'Actividad eliminada exitosamente.')
         return redirect('lista_actividad')
     return redirect('lista_actividad')
+
+def informes(request):
+    return render(request, 'informes.html')

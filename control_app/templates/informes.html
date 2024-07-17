@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de personal</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+</head>
+<body>
+    <h1 class="page-title">Lista de personal</h1>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="vstack gap-3 mx-auto" style="max-width: 300px;">
+                  <a class="btn btn-primary btn-sm" href="{% url 'lista_personal' %}">
+                    <i class="fas fa-users me-2"></i>Personal
+                           </a>
+                        </div>
+    </body>
+</div>
+
+
+
+<script>
+</script>
+{% endblock %}
