@@ -12,15 +12,25 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </head>
 <body>
-    <h1 class="page-title">Lista de personal</h1>
+    <h1 class="page-title">Informes y formularios</h1>
     <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-md-6">
             <div class="vstack gap-3 mx-auto" style="max-width: 300px;">
                   <a class="btn btn-primary btn-sm" href="{% url 'lista_personal' %}">
-                    <i class="fas fa-users me-2"></i>Personal
+                    <i class="fas fa-th-large me-2"></i>ALM-7M
                            </a>
-                        </div>
+                           <a class="btn btn-primary btn-sm" href="{% url 'lista_personal' %}">
+                            <i class="fas fa-th-large me-2"></i>DE-5
+                          </a>
+                          <a class="btn btn-primary btn-sm" href="{% url 'lista_personal' %}">
+                            <i class="fas fa-th-large me-2"></i>Movimientos
+                          </a>
+                          <a class="btn btn-primary btn-sm" href="{% url 'lista_personal' %}">
+                            <i class="fas fa-th-large me-2"></i>En tránsito
+                          </a>
+    </div>
+</div>
     </body>
 </div>
 
