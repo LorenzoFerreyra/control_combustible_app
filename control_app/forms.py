@@ -1,5 +1,5 @@
 from django import forms
-from .models import Empleado, Equipo, Ruta, Actividad
+from .models import Empleado, Equipo, Ruta, Actividad, EnTransito
 from django.utils.translation import gettext_lazy as _
 
 
@@ -38,3 +38,28 @@ class ActividadForm(CustomForm):
     class Meta:
         model = Actividad
         fields = '__all__'
+        
+class EnTransitoForm(forms.ModelForm):
+    class Meta:
+        model = EnTransito
+        fields = '__all__'
+        widgets = {
+            'proyecto': forms.Select(attrs={'class': 'form-control'}),
+            'numero_interno': forms.Select(attrs={'class': 'form-control'}),
+            'tipo_equipo': forms.TextInput(attrs={'class': 'form-control'}),
+            'operador': forms.Select(attrs={'class': 'form-control'}),
+            'gasolina_cargada': forms.NumberInput(attrs={'class': 'form-control'}),
+            'diesel_cargado': forms.NumberInput(attrs={'class': 'form-control'}),
+            'lubricante_15w40_gasolina': forms.NumberInput(attrs={'class': 'form-control'}),
+            'lubricante_15w40_diesel': forms.NumberInput(attrs={'class': 'form-control'}),
+            'lubricante_aoh68_hidraulico': forms.NumberInput(attrs={'class': 'form-control'}),
+            'lubricante_85w140': forms.NumberInput(attrs={'class': 'form-control'}),
+            'lubricante_80w90': forms.NumberInput(attrs={'class': 'form-control'}),
+            'lubricante_mt1_10w_transm': forms.NumberInput(attrs={'class': 'form-control'}),
+            'fluido_tipo_a': forms.NumberInput(attrs={'class': 'form-control'}),
+            'anticongelante_litros': forms.NumberInput(attrs={'class': 'form-control'}),
+            'liquido_freno': forms.NumberInput(attrs={'class': 'form-control'}),
+            'grasa_rodamiento': forms.NumberInput(attrs={'class': 'form-control'}),
+            'grasa_chasis': forms.NumberInput(attrs={'class': 'form-control'}),
+            'observaciones': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }

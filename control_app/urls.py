@@ -22,4 +22,5 @@ urlpatterns = [
     path('editar_actividad/<id>/', views.editar_actividad, name='editar_actividad'),
     path('eliminar_actividad/<id>/', views.eliminar_actividad, name='eliminar_actividad'),
     path('informes/', views.informes, name='informes'),
+    path('crear_entransito/', views.crear_en_transito, name='crear_en_transito'),
 ]

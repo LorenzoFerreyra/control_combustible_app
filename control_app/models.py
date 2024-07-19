@@ -278,3 +278,4 @@ class EnTransito(models.Model):
     class Meta:
         verbose_name = "En Tránsito"
         verbose_name_plural = "Datos en Tránsito"
+        

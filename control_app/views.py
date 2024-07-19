@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Empleado, Equipo, Ruta, Actividad
-from .forms import EmpleadoForm, EquipoForm, RutaForm, ActividadForm
+from .forms import EmpleadoForm, EquipoForm, RutaForm, ActividadForm, EnTransitoForm
 
 @login_required
 def index(request):
@@ -177,3 +177,16 @@ def eliminar_actividad(request, id):
 
 def informes(request):
     return render(request, 'informes.html')
+
+
+def crear_en_transito(request):
+    if request.method == 'POST':
+        form = EnTransitoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Registro en tránsito creado exitosamente.')
+            return redirect('informes')
+    else:
+        form = EnTransitoForm()
+    
+    return render(request, 'crear_entransito.html', {'form': form})
