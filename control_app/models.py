@@ -249,10 +249,8 @@ class TransaccionCombustible(models.Model):
 class EnTransito(models.Model):
     proyecto = models.ForeignKey('Proyecto_DE5', on_delete=models.CASCADE, verbose_name="Proyecto")
     numero = models.AutoField(primary_key=True, verbose_name="Número")
-    numero_interno = models.ForeignKey(Equipo, to_field='numero_interno', on_delete=models.CASCADE, verbose_name="Número Interno")
-
-    # Relacionando con el modelo Equipo para obtener el tipo de equipo
-    tipo_equipo = models.CharField(max_length=200)
+    numero_interno = models.CharField(max_length=100, verbose_name="Número Interno")
+    tipo_equipo = models.CharField(max_length=200, verbose_name="Tipo de Equipo")
 
     # Relacionando con el modelo Empleado para obtener el operador
     operador = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name="Operador")

@@ -40,13 +40,22 @@ class ActividadForm(CustomForm):
         fields = '__all__'
         
 class EnTransitoForm(forms.ModelForm):
+    numero_interno = forms.ModelChoiceField(
+        queryset=Equipo.objects.all(),
+        label="Número Interno",
+        empty_label="Seleccione un número interno"
+    )
+
     class Meta:
         model = EnTransito
-        fields = '__all__'
+        fields = ['proyecto', 'numero_interno', 'tipo_equipo', 'operador', 'gasolina_cargada', 'diesel_cargado', 
+                  'lubricante_15w40_gasolina', 'lubricante_15w40_diesel', 
+                  'lubricante_aoh68_hidraulico', 'lubricante_85w140', 'lubricante_80w90', 
+                  'lubricante_mt1_10w_transm', 'fluido_tipo_a', 'anticongelante_litros', 
+                  'liquido_freno', 'grasa_rodamiento', 'grasa_chasis', 'observaciones']
         widgets = {
             'proyecto': forms.Select(attrs={'class': 'form-control'}),
-            'numero_interno': forms.Select(attrs={'class': 'form-control'}),
-            'tipo_equipo': forms.TextInput(attrs={'class': 'form-control'}),
+            'tipo_equipo': forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
             'operador': forms.Select(attrs={'class': 'form-control'}),
             'gasolina_cargada': forms.NumberInput(attrs={'class': 'form-control'}),
             'diesel_cargado': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -63,3 +72,29 @@ class EnTransitoForm(forms.ModelForm):
             'grasa_chasis': forms.NumberInput(attrs={'class': 'form-control'}),
             'observaciones': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['numero_interno'].widget.attrs.update({'class': 'form-control'})
+        self.fields['numero_interno'].queryset = Equipo.objects.all().order_by('numero_interno')
+        self.fields['numero_interno'].label_from_instance = self.label_from_instance
+        self.fields['tipo_equipo'].required = False
+
+    @staticmethod
+    def label_from_instance(obj):
+        return f"{obj.numero_interno} - {obj.tipo_equipo}"
+
+    def clean(self):
+        cleaned_data = super().clean()
+        numero_interno = cleaned_data.get('numero_interno')
+        if numero_interno:
+            cleaned_data['tipo_equipo'] = numero_interno.tipo_equipo
+        return cleaned_data
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if instance.numero_interno:
+            instance.tipo_equipo = instance.numero_interno.tipo_equipo
+        if commit:
+            instance.save()
+        return instance
