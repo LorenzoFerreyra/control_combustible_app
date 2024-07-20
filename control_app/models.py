@@ -31,7 +31,7 @@ class Empleado(models.Model):
 
     def __str__(self):
         # Representación del objeto Empleado
-        return f"{self.paterno} {self.materno}, {self.nom1} {self.nom2 if self.nom2 else ''}"
+        return f"{self.paterno} {self.materno}"
 
     # En Meta aclaramos y hacemos mas amigables los metadatos para observarlos mejor en el admin site
     class Meta:

@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Empleado, Equipo, Ruta, Actividad, EnTransito
+from .models import Empleado, Equipo, Ruta, Actividad, EnTransito, Proyecto_DE5
 from .forms import EmpleadoForm, EquipoForm, RutaForm, ActividadForm, EnTransitoForm
+from django.http import HttpResponse
 
 @login_required
 def index(request):
@@ -196,7 +197,7 @@ def registros_entransito(request):
     return render(request, 'entransito_registros.html', {'entransitos': entransitos})
 
 def editar_entransito(request, numero):
-    entransito = get_object_or_404(EnTransitoForm, numero=numero)
+    entransito = get_object_or_404(EnTransito, numero=numero)
     if request.method == 'POST':
         form = EnTransitoForm(request.POST, instance=entransito)
         if form.is_valid():
@@ -205,3 +206,29 @@ def editar_entransito(request, numero):
     else:
         form = EnTransitoForm(instance=entransito)
     return render(request, 'editar_entransito.html', {'form': form, 'entransito': entransito})
+
+def vista_entransito(request):
+    proyectos = Proyecto_DE5.objects.all()
+    selected_proyecto = request.GET.get('proyecto')
+    
+    entransitos = EnTransito.objects.all()
+    if selected_proyecto:
+        entransitos = entransitos.filter(proyecto_id=selected_proyecto)
+    
+    context = {
+        'entransitos': entransitos,
+        'proyectos': proyectos,
+        'selected_proyecto': int(selected_proyecto) if selected_proyecto else None,
+    }
+    if 'download' in request.GET:
+        format = request.GET.get('format', 'csv')
+        resource = EnTransitoResource()
+        dataset = resource.export(entransitos)
+        if format == 'csv':
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="entransitos.csv"'
+        elif format == 'xlsx':
+            response = HttpResponse(dataset.xlsx, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = 'attachment; filename="entransitos.xlsx"'
+        return response
+    return render(request, 'entransito_registros.html', context)

@@ -31,6 +31,19 @@
 <body>
     <h1 class="page-title">Resumen mensual de consumo de combustible de unidades en tránsito</h1>
     <a href="{% url 'crear_en_transito' %}" class="btn btn-sm btn-primary mb-3">Crear registro</a>
+    <form method="GET" action="">
+        <select name="proyecto" id="proyecto-filter" class="form-control mb-3">
+            <option value="">Todos los proyectos</option>
+            {% for proyecto in proyectos %}
+                <option value="{{ proyecto.proyecto }}" {% if proyecto.proyecto == selected_proyecto %}selected{% endif %}>
+                    {{ proyecto.numero }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary mb-3">Filtrar</button>
+    </form>
+    <a href="?{% if selected_proyecto %}proyecto={{ selected_proyecto }}&{% endif %}download=true&format=csv" class="btn btn-success mb-3">Descargar CSV</a>
+    <a href="?{% if selected_proyecto %}proyecto={{ selected_proyecto }}&{% endif %}download=true&format=xlsx" class="btn btn-success mb-3">Descargar Excel</a>
     <div style="width: 100%; overflow-x: auto;">
         <table id="entransito-table">
             <thead>
