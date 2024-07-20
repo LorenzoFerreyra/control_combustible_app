@@ -43,19 +43,20 @@ class EnTransitoForm(forms.ModelForm):
     numero_interno = forms.ModelChoiceField(
         queryset=Equipo.objects.all(),
         label="Número Interno",
-        empty_label="Seleccione un número interno"
+        empty_label="Seleccione un número interno",
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     class Meta:
         model = EnTransito
-        fields = ['proyecto', 'numero_interno', 'tipo_equipo', 'operador', 'gasolina_cargada', 'diesel_cargado', 
+        fields = ['proyecto', 'fecha','numero_interno', 'operador', 'gasolina_cargada', 'diesel_cargado', 
                   'lubricante_15w40_gasolina', 'lubricante_15w40_diesel', 
                   'lubricante_aoh68_hidraulico', 'lubricante_85w140', 'lubricante_80w90', 
                   'lubricante_mt1_10w_transm', 'fluido_tipo_a', 'anticongelante_litros', 
                   'liquido_freno', 'grasa_rodamiento', 'grasa_chasis', 'observaciones']
         widgets = {
             'proyecto': forms.Select(attrs={'class': 'form-control'}),
-            'tipo_equipo': forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
+            'fecha': forms.DateInput(attrs={'class': 'form-control','type': 'date'}),
             'operador': forms.Select(attrs={'class': 'form-control'}),
             'gasolina_cargada': forms.NumberInput(attrs={'class': 'form-control'}),
             'diesel_cargado': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -75,10 +76,8 @@ class EnTransitoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['numero_interno'].widget.attrs.update({'class': 'form-control'})
         self.fields['numero_interno'].queryset = Equipo.objects.all().order_by('numero_interno')
         self.fields['numero_interno'].label_from_instance = self.label_from_instance
-        self.fields['tipo_equipo'].required = False
 
     @staticmethod
     def label_from_instance(obj):

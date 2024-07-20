@@ -249,26 +249,27 @@ class TransaccionCombustible(models.Model):
 class EnTransito(models.Model):
     proyecto = models.ForeignKey('Proyecto_DE5', on_delete=models.CASCADE, verbose_name="Proyecto")
     numero = models.AutoField(primary_key=True, verbose_name="Número")
-    numero_interno = models.CharField(max_length=100, verbose_name="Número Interno")
+    fecha = models.DateField(default=date.today, verbose_name="Fecha")
+    numero_interno = models.ForeignKey(Equipo, on_delete=models.CASCADE, max_length=100, verbose_name="Número Interno")
     tipo_equipo = models.CharField(max_length=200, verbose_name="Tipo de Equipo")
 
     # Relacionando con el modelo Empleado para obtener el operador
-    operador = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name="Operador")
+    operador = models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name="Operador", blank=True, null=True)
 
     gasolina_cargada = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Gasolina Cargada")
-    diesel_cargado = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Diesel Cargado")
-    lubricante_15w40_gasolina = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="15W-40 Gasolina")
-    lubricante_15w40_diesel = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="15W-40 Diesel")
-    lubricante_aoh68_hidraulico = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="AOH-68 Hidráulico")
-    lubricante_85w140 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="85W-140")
-    lubricante_80w90 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="80W-90")
-    lubricante_mt1_10w_transm = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="MT1-10W TRANSM")
-    fluido_tipo_a = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Fluido Tipo A")
-    anticongelante_litros = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Anticongelante Litros")
-    liquido_freno = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Líquido de Freno")
-    grasa_rodamiento = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Grasa de Rodamiento")
-    grasa_chasis = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Grasa de Chasis")
-    observaciones = models.TextField(verbose_name="Observaciones")
+    diesel_cargado = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Diesel Cargado", blank=True, null=True)
+    lubricante_15w40_gasolina = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="15W-40 Gasolina", blank=True, null=True)
+    lubricante_15w40_diesel = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="15W-40 Diesel", blank=True, null=True)
+    lubricante_aoh68_hidraulico = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="AOH-68 Hidráulico", blank=True, null=True)
+    lubricante_85w140 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="85W-140", blank=True, null=True)
+    lubricante_80w90 = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="80W-90", blank=True, null=True)
+    lubricante_mt1_10w_transm = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="MT1-10W TRANSM", blank=True, null=True)
+    fluido_tipo_a = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Fluido Tipo A", blank=True, null=True)
+    anticongelante_litros = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Anticongelante Litros", blank=True, null=True)
+    liquido_freno = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Líquido de Freno", blank=True, null=True)
+    grasa_rodamiento = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Grasa de Rodamiento", blank=True, null=True)
+    grasa_chasis = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Grasa de Chasis", blank=True, null=True)
+    observaciones = models.TextField(max_length=400,verbose_name="Observaciones", blank=True, null=True)
 
     def __str__(self):
         return f"En Transito {self.numero} - Proyecto: {self.proyecto}"
