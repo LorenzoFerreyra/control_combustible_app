@@ -23,4 +23,6 @@ urlpatterns = [
     path('eliminar_actividad/<id>/', views.eliminar_actividad, name='eliminar_actividad'),
     path('informes/', views.informes, name='informes'),
     path('crear_entransito/', views.crear_en_transito, name='crear_en_transito'),
+    path('registros_entransito/', views.registros_entransito, name='registros_entransito'),
+    path('editar_entransito/<int:numero>', views.editar_entransito, name='editar_entransito'),
 ]

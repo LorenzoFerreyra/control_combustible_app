@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Empleado, Equipo, Ruta, Actividad
+from .models import Empleado, Equipo, Ruta, Actividad, EnTransito
 from .forms import EmpleadoForm, EquipoForm, RutaForm, ActividadForm, EnTransitoForm
 
 @login_required
@@ -190,3 +190,18 @@ def crear_en_transito(request):
         form = EnTransitoForm()
     
     return render(request, 'crear_entransito.html', {'form': form})
+
+def registros_entransito(request):
+    entransitos = EnTransito.objects.all()
+    return render(request, 'entransito_registros.html', {'entransitos': entransitos})
+
+def editar_entransito(request, numero):
+    entransito = get_object_or_404(EnTransitoForm, numero=numero)
+    if request.method == 'POST':
+        form = EnTransitoForm(request.POST, instance=entransito)
+        if form.is_valid():
+            form.save()
+            return redirect('informes')
+    else:
+        form = EnTransitoForm(instance=entransito)
+    return render(request, 'editar_entransito.html', {'form': form, 'entransito': entransito})
